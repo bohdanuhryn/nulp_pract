@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Snake</string>
+
+    <string name="game_button">Game</string>
+
+    <string name="player_name_edit">Enter your name</string>
+    <string name="save_score_button">Save score</string>
+
+    <string name="title_activity_level">Level</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="hello_world">Hello world!</string>
+</resources>
