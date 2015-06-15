@@ -17,7 +17,7 @@ public class GameThread extends Thread {
         context = _context;
 
         backgroundPaint = new Paint();
-        backgroundPaint.setARGB(255, 120, 210, 0);
+        backgroundPaint.setARGB(255, 0, 0, 0);
         isRun = true;
     }
 
@@ -30,7 +30,7 @@ public class GameThread extends Thread {
     private boolean isRun;
 
     long _sleepTime;
-    final long  DELAY = 4;
+    final long  DELAY = 1000;
 
     @Override
     public void run() {

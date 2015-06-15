@@ -3,6 +3,9 @@ package com.nulp.bohdanuhryn.snake;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.content.Context;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
 /**
  * Created by BohdanUhryn on 14.06.2015.
@@ -17,13 +20,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public GameView(Context _context, GameEngine _gameEngine) {
         super(_context);
-
         gameEngine = _gameEngine;
         context = _context;
-
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
-
         gameThread = new GameThread(holder, gameEngine, context);
         setFocusable(true);
     }
@@ -33,11 +33,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
        if(!gameThread.IsRunning())
            gameThread = new GameThread(getHolder(), gameEngine, context);
         gameThread.start();
+
+        setOnTouchListener(new OnSwipeTouchListener(context) {
+            public void onSwipeTop() {
+                gameEngine.SetMoveDirection(0, -1);
+            }
+            public void onSwipeRight() {
+                gameEngine.SetMoveDirection(1, 0);
+            }
+            public void onSwipeLeft() {
+                gameEngine.SetMoveDirection(-1, 0);
+            }
+            public void onSwipeBottom() {
+                gameEngine.SetMoveDirection(0, 1);
+            }
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        gameEngine.UpdateCellSize(width, height);
     }
 
     @Override
