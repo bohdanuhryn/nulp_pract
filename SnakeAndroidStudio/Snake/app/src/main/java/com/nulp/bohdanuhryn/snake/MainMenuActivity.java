@@ -8,6 +8,10 @@ import android.view.View;
 import android.app.Activity;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.media.MediaPlayer;
 
 public class MainMenuActivity extends Activity {
 
@@ -19,39 +23,62 @@ public class MainMenuActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_main_menu);
-    }
+        setContentView(R.layout.activity_menu);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_menu, menu);
-        return true;
-    }
+        TextView header = (TextView)findViewById(R.id.menu_header);
+        header.setText(R.string.main_menu_header);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.button_click);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        LinearLayout content = (LinearLayout)findViewById(R.id.menu_content);
+        Button button;
 
-        return super.onOptionsItemSelected(item);
-    }
+        button = new Button(this);
+        button.setText(R.string.game_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), LevelActivity.class);
+                mp.start();
+                startActivity(intent);
+            }
+        });
+        content.addView(button);
 
-    public void switchActivity(View view) {
-        Intent intent = null;
-        switch(view.getId()) {
-            case R.id.gameButton:
-                intent = new Intent(this, LevelActivity.class);
-                break;
-        }
-        if(intent != null)
-            startActivity(intent);
+        button = new Button(this);
+        button.setText(R.string.scores_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ScoresActivity.class);
+                mp.start();
+                startActivity(intent);
+            }
+        });
+        content.addView(button);
+
+        button = new Button(this);
+        button.setText(R.string.sound_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), SoundActivity.class);
+                mp.start();
+                startActivity(intent);
+            }
+        });
+        content.addView(button);
+        // About button
+        button = new Button(this);
+        button.setText(R.string.about_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AboutActivity.class);
+                mp.start();
+                startActivity(intent);
+            }
+        });
+        content.addView(button);
     }
 }

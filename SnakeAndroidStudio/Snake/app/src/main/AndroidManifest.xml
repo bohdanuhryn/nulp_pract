@@ -24,6 +24,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
         </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about_header"
+            android:parentActivityName=".MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
+        </activity>
+        <activity
+            android:name=".ScoresActivity"
+            android:label="@string/scores_header"
+            android:parentActivityName=".MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
+        </activity>
+        <activity
+            android:name=".SoundActivity"
+            android:label="@string/sound_header"
+            android:parentActivityName=".MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
+        </activity>
     </application>
 
 </manifest>
