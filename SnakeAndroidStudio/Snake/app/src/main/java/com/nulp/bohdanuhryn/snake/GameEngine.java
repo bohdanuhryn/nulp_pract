@@ -11,11 +11,9 @@ public class GameEngine {
 
     private GameField gameField;
     private Snake snake;
-
     private int cellSize;
-
-    int moveX;
-    int moveY;
+    private int moveX;
+    private int moveY;
 
     public GameEngine() {
         TestField();
@@ -36,14 +34,22 @@ public class GameEngine {
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), p);
 
         p.setARGB(255, 120, 80, 80);
-        for(int i = 0; i < gameField.field.size(); ++i) {
+        for(int i = 0; i < gameField.walls.size(); ++i) {
             canvas.drawRect(
-                    gameField.field.elementAt(i).x * cellSize,
-                    gameField.field.elementAt(i).y * cellSize,
-                    (gameField.field.elementAt(i).x + 1) * cellSize,
-                    (gameField.field.elementAt(i).y + 1) * cellSize,
+                    gameField.walls.elementAt(i).x * cellSize,
+                    gameField.walls.elementAt(i).y * cellSize,
+                    (gameField.walls.elementAt(i).x + 1) * cellSize,
+                    (gameField.walls.elementAt(i).y + 1) * cellSize,
                     p);
         }
+
+        p.setARGB(255, 255, 0, 0);
+        if(gameField.food != null)
+            canvas.drawCircle(
+                    gameField.food.x * cellSize + cellSize / 2,
+                    gameField.food.y * cellSize + cellSize / 2,
+                    cellSize / 2,
+                    p);
 
         p.setARGB(255, 0, 160, 0);
         for(int i = 0; i < snake.body.size(); ++i) {
@@ -54,6 +60,10 @@ public class GameEngine {
                     (snake.body.elementAt(i).y + 1) * cellSize,
                     p);
         }
+    }
+
+    public int GetScore() {
+        return snake.foodWeight;// TODO: !!!!!!!!!!
     }
 
     public void SetMoveDirection(int _moveX, int _moveY) {
@@ -71,11 +81,11 @@ public class GameEngine {
         snake = new Snake(2, 2, 2);
         byte w = 10;
         byte h = 10;
-        Vector<FieldCell> field = new Vector<FieldCell>();
-        field.add(new FieldCell(0, 0));
-        field.add(new FieldCell(0, 9));
-        field.add(new FieldCell(9, 9));
-        field.add(new FieldCell(9, 0));
+        Vector<Wall> field = new Vector<Wall>();
+        field.add(new Wall(0, 0));
+        field.add(new Wall(0, 9));
+        field.add(new Wall(9, 9));
+        field.add(new Wall(9, 0));
         gameField = new GameField(w, h, field, snake);
     }
 }

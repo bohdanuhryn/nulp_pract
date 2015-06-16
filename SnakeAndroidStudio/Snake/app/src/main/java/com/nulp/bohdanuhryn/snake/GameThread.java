@@ -5,13 +5,15 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
+import android.widget.TextView;
+import android.app.Activity;
 
 /**
  * Created by BohdanUhryn on 14.06.2015.
  */
 public class GameThread extends Thread {
 
-    public GameThread(SurfaceHolder _surfaceHolder, GameEngine _gameEngine, Context _context) {
+    public GameThread(SurfaceHolder _surfaceHolder, GameEngine _gameEngine, Activity _context) {
         surfaceHolder = _surfaceHolder;
         gameEngine = _gameEngine;
         context = _context;
@@ -23,7 +25,7 @@ public class GameThread extends Thread {
 
     private SurfaceHolder surfaceHolder;
     private GameEngine gameEngine;
-    private Context context;
+    private Activity context;
 
     private Paint backgroundPaint;
 
@@ -38,6 +40,13 @@ public class GameThread extends Thread {
         while (isRun)
         {
             gameEngine.Update();
+
+            final TextView score = (TextView)context.findViewById(R.id.score_text_view);
+            score.post(new Runnable() {
+                           public void run() {
+                               score.setText(Integer.toString(gameEngine.GetScore()));
+                           }
+                       });
 
             Canvas canvas = surfaceHolder.lockCanvas(null);
 

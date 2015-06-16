@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.app.Activity;
 
 /**
  * Created by BohdanUhryn on 14.06.2015.
@@ -13,12 +14,12 @@ import android.view.View.OnTouchListener;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     SurfaceHolder surfaceHolder;
-    Context context;
+    Activity context;
 
     private GameEngine gameEngine;
     private GameThread gameThread;
 
-    public GameView(Context _context, GameEngine _gameEngine) {
+    public GameView(Activity _context, GameEngine _gameEngine) {
         super(_context);
         gameEngine = _gameEngine;
         context = _context;

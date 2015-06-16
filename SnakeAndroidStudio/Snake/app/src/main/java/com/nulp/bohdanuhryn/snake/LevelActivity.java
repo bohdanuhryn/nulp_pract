@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.SurfaceView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 
 public class LevelActivity extends Activity {

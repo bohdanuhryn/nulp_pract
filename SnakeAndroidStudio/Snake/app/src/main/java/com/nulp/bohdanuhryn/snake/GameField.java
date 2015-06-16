@@ -2,6 +2,7 @@ package com.nulp.bohdanuhryn.snake;
 
 import java.util.Vector;
 import java.lang.Math;
+import java.util.Random;
 import android.graphics.Point;
 
 /**
@@ -9,65 +10,54 @@ import android.graphics.Point;
  */
 public class GameField {
 
-    public byte width;
-    public byte height;
-    public Vector<FieldCell> field;
+    public int width;
+    public int height;
+    public Vector<Wall> walls;
 
     private Snake snake;
 
     public Food food;
 
     public GameField(
-            byte _width,
-            byte _height,
-            Vector<FieldCell> _field,
+            int _width,
+            int _height,
+            Vector<Wall> _walls,
             Snake _snake) {
         width = _width;
         height = _height;
-        field = _field;
+        walls = _walls;
         snake = _snake;
         food = null;
         GenerateFood();
     }
 
     public void GenerateFood() {
-        Vector<Point> fieldItems = new Vector<Point>();
-        for(int i = 0; i < field.size(); ++i) {
-            fieldItems.add((Point)field.elementAt(i));
-        }
-        for(int i = 0; i < snake.body.size(); ++i) {
-            fieldItems.add((Point)snake.body.elementAt(i));
-        }
+        Vector<Point> emptyFieldCells = new Vector<Point>();
+
+        int[][] fieldCells = new int[height][width];
+
+        for(int i = 0; i < walls.size(); ++i)
+            fieldCells[walls.elementAt(i).y][walls.elementAt(i).x] = 1;
+        for(int i = 0; i < snake.body.size(); ++i)
+            fieldCells[snake.body.elementAt(i).y][snake.body.elementAt(i).x] = 1;
+
+        for(int i = 0; i < height; ++i)
+            for(int j = 0; j < width; ++j) {
+                if(fieldCells[i][j] == 0)
+                    emptyFieldCells.add(new Point(j, i));
+            }
+
+        Random r = new Random();
+        int emptyCellNumber = r.nextInt(emptyFieldCells.size());
+        food = new Food(
+                emptyFieldCells.elementAt(emptyCellNumber).x,
+                emptyFieldCells.elementAt(emptyCellNumber).y,
+                1);
     }
 
     public void Move(int moveX, int moveY) {
-        int dx = snake.body.elementAt(0).x - snake.body.elementAt(1).x;
-        int dy = snake.body.elementAt(0).y - snake.body.elementAt(1).y;
-        if(Math.abs(dx) > 1)
-            dx = dx / Math.abs(dx) * -1;
-        if(Math.abs(dy) > 1)
-            dy = dy / Math.abs(dy) * -1;
-        Bone newHead;
-        if((moveX == 0 && moveY == 0) || (moveX == dx || moveY == dy) || (moveX * -1 == dx || moveY * -1 == dy))
-            newHead = new Bone(snake.body.elementAt(0).x + dx, snake.body.elementAt(0).y + dy);
-        else
-            newHead = new Bone(snake.body.elementAt(0).x + moveX, snake.body.elementAt(0).y + moveY);
-
-        if(newHead.x < 0) newHead.x = width - 1;
-        if(newHead.y < 0) newHead.y = height - 1;
-        if(newHead.x >= width) newHead.x = 0;
-        if(newHead.y >= height) newHead.y = 0;
-
-        for(int i = 0; i < field.size(); ++i) {
-            if(field.elementAt(i).x == newHead.x && field.elementAt(i).y == newHead.y)
-                return; //TODO:!!!!!!!!!!!
-        }
-        for(int i = 0; i < snake.body.size(); ++i) {
-            if(snake.body.elementAt(i).x == newHead.x && snake.body.elementAt(i).y == newHead.y)
-                return; //TODO:!!!!!!!!!!!
-        }
-
-        snake.body.add(0, newHead);
-        snake.body.remove(snake.body.lastElement());
+        snake.Move(moveX, moveY, this);
+        if(snake.GetState() == SnakeState.EAT_FOOD)
+            GenerateFood();
     }
 }
