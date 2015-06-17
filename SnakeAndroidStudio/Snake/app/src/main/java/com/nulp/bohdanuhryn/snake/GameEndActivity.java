@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.media.MediaPlayer;
 
-public class MainMenuActivity extends Activity {
+public class GameEndActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class MainMenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
 
         TextView header = (TextView)findViewById(R.id.menu_header);
-        header.setText(R.string.main_menu_header);
+        header.setText(R.string.game_end_header);
 
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.button_click);
 
@@ -34,7 +34,7 @@ public class MainMenuActivity extends Activity {
         Button button;
 
         button = new Button(this);
-        button.setText(R.string.game_button);
+        button.setText(R.string.restart_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,52 +45,17 @@ public class MainMenuActivity extends Activity {
         });
         content.addView(button);
 
+        // Main menu button
         button = new Button(this);
-        button.setText(R.string.scores_button);
+        button.setText(R.string.main_menu_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ScoresActivity.class);
+                Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
                 mp.start();
                 startActivity(intent);
             }
         });
         content.addView(button);
-
-        button = new Button(this);
-        button.setText(R.string.sound_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), SoundActivity.class);
-                mp.start();
-                startActivity(intent);
-            }
-        });
-        content.addView(button);
-        // About button
-        button = new Button(this);
-        button.setText(R.string.about_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AboutActivity.class);
-                mp.start();
-                startActivity(intent);
-            }
-        });
-        content.addView(button);
-
-        if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 }

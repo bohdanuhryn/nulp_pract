@@ -33,6 +33,8 @@ public class LevelActivity extends Activity {
 
         LinearLayout l = (LinearLayout)findViewById(R.id.level_linear_layout);
         l.addView(gameView);
+
+        ScoresManager.Init(this);
     }
 
     @Override

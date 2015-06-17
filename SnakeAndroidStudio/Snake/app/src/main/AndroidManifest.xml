@@ -48,6 +48,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
         </activity>
+        <activity
+            android:name=".SaveScoreActivity"
+            android:label="@string/save_score_header">
+        </activity>
+        <activity
+            android:name=".GameEndActivity"
+            android:label="@string/game_end_header">
+        </activity>
     </application>
 
 </manifest>

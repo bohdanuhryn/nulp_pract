@@ -3,6 +3,7 @@
     <string name="copyright">Bohdan Uhrynovskiy (c) 2015</string>
     <!-- Main menu -->
     <string name="main_menu_header">Main menu</string>
+    <string name="main_menu_button">Main menu</string>
     <string name="game_button">Game</string>
     <string name="scores_button">Scores</string>
     <string name="sound_button">Sound</string>
@@ -10,15 +11,27 @@
 
     <!-- Scores activity -->
     <string name="scores_header">Scores</string>
+    <string name="scores_file">SCORES_FILE</string>
 
     <!-- Sound activity -->
     <string name="sound_header">Sound settings</string>
 
     <!-- About activity -->
     <string name="about_header">About</string>
+
+    <!-- Save score activity -->
+    <string name="save_score_header">Save your score! You are in TOP-10!</string>
     <string name="player_name_edit">Enter your name</string>
     <string name="save_score_button">Save score</string>
 
+    <!-- Game end activity -->
+    <string name="game_end_header">Game end</string>
+    <string name="restart_button">Restart</string>
+
+    <!-- Pause activity -->
+
+
+    <!-- Level -->
     <string name="title_activity_level">Level</string>
 
     <string name="action_settings">Settings</string>

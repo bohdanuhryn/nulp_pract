@@ -1,8 +1,14 @@
 package com.nulp.bohdanuhryn.snake;
 
 import java.util.Vector;
+
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.app.Activity;
+import android.os.Looper;
+import android.widget.TextView;
+import android.os.Handler;
 
 /**
  * Created by BohdanUhryn on 14.06.2015.
@@ -25,6 +31,46 @@ public class GameEngine {
         gameField.Move(moveX, moveY);
         moveX = 0;
         moveY = 0;
+    }
+
+    public void UpdateUI(final Activity context) {
+        switch (snake.GetState()) {
+            case EAT_FOOD:
+                final TextView score = (TextView) context.findViewById(R.id.score_text_view);
+                score.post(new Runnable() {
+                    public void run() {
+                        String str = Integer.toString(snake.foodWeight).concat(" / ")
+                                .concat(Integer.toString(ScoresManager.GetMaxScore()));
+                        score.setText(str);
+                    }
+                });
+                break;
+            case BITE_ITSELF:
+            case KICK_WALL:
+                Handler handler = new Handler(Looper.getMainLooper());
+                if(ScoresManager.CheckScore(snake.foodWeight)) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(context, SaveScoreActivity.class);
+                            intent.putExtra("score", snake.foodWeight);
+                            //intent.putExtra("level", levelId);
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+                else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(context, GameEndActivity.class);
+                            //intent.putExtra("level", levelId);
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+                break;
+        }
     }
 
     public void Draw(Canvas canvas) {
@@ -60,10 +106,6 @@ public class GameEngine {
                     (snake.body.elementAt(i).y + 1) * cellSize,
                     p);
         }
-    }
-
-    public int GetScore() {
-        return snake.foodWeight;// TODO: !!!!!!!!!!
     }
 
     public void SetMoveDirection(int _moveX, int _moveY) {
