@@ -2,6 +2,7 @@ package com.nulp.bohdanuhryn.snake;
 
 import java.util.Vector;
 
+import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,6 +10,9 @@ import android.app.Activity;
 import android.os.Looper;
 import android.widget.TextView;
 import android.os.Handler;
+
+import com.nulp.bohdanuhryn.snake.gui.MainMenuActivity;
+import com.nulp.bohdanuhryn.snake.gui.SaveScoreActivity;
 
 /**
  * Created by BohdanUhryn on 14.06.2015.
@@ -63,8 +67,9 @@ public class GameEngine {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Intent intent = new Intent(context, GameEndActivity.class);
-                            //intent.putExtra("level", levelId);
+                            Intent intent = new Intent(context, MainMenuActivity.class);
+                            intent.putExtra(context.getResources().getString(R.string.set_game_end_menu), true);
+                            //intent.putExtra("level", levelId);// TODO:!!!
                             context.startActivity(intent);
                         }
                     });

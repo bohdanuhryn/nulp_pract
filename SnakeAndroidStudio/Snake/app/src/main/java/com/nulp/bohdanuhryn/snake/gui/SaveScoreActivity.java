@@ -1,23 +1,18 @@
-package com.nulp.bohdanuhryn.snake;
+package com.nulp.bohdanuhryn.snake.gui;
 
-import java.util.Vector;
-import java.util.Map;
-import java.util.HashMap;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
 import android.app.Activity;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.GridView;
 import android.widget.EditText;
+
+import com.nulp.bohdanuhryn.snake.R;
+import com.nulp.bohdanuhryn.snake.ScoresManager;
 
 public class SaveScoreActivity extends Activity {
 
@@ -56,7 +51,8 @@ public class SaveScoreActivity extends Activity {
             @Override
             public void onClick(View v) {
                 ScoresManager.AddScore(editPlayerName.getText().toString(), score);
-                Intent intent = new Intent(v.getContext(), GameEndActivity.class);
+                Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
+                intent.putExtra(getResources().getString(R.string.set_game_end_menu), true);
                 startActivity(intent);
             }
         });

@@ -3,11 +3,16 @@
     <string name="copyright">Bohdan Uhrynovskiy (c) 2015</string>
     <!-- Main menu -->
     <string name="main_menu_header">Main menu</string>
+    <string name="pause_menu_header">Pause</string>
+    <string name="game_end_header">Game end</string>
+
     <string name="main_menu_button">Main menu</string>
     <string name="game_button">Game</string>
     <string name="scores_button">Scores</string>
     <string name="sound_button">Sound</string>
     <string name="about_button">About</string>
+    <string name="restart_button">Restart</string>
+    <string name="resume_button">Resume</string>
 
     <!-- Scores activity -->
     <string name="scores_header">Scores</string>
@@ -24,13 +29,6 @@
     <string name="player_name_edit">Enter your name</string>
     <string name="save_score_button">Save score</string>
 
-    <!-- Game end activity -->
-    <string name="game_end_header">Game end</string>
-    <string name="restart_button">Restart</string>
-
-    <!-- Pause activity -->
-
-
     <!-- Level -->
     <string name="title_activity_level">Level</string>
 
@@ -38,5 +36,8 @@
 
     <string name="score_label">Score:</string>
 
+    <!-- Constants -->
+    <string name="set_pause_menu">SET_PAUSE_MENU</string>
+    <string name="set_game_end_menu">SET_GAME_END_MENU</string>
 
 </resources>

@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainMenuActivity"
+            android:name=".gui.MainMenuActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,44 +17,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LevelActivity"
+            android:name=".gui.LevelActivity"
             android:label="@string/title_activity_level"
-            android:parentActivityName=".MainMenuActivity" >
+            android:parentActivityName=".gui.MainMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
+                android:value=".gui.MainMenuActivity" />
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name=".gui.AboutActivity"
             android:label="@string/about_header"
-            android:parentActivityName=".MainMenuActivity" >
+            android:parentActivityName=".gui.MainMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
+                android:value=".gui.MainMenuActivity" />
         </activity>
         <activity
-            android:name=".ScoresActivity"
+            android:name=".gui.ScoresActivity"
             android:label="@string/scores_header"
-            android:parentActivityName=".MainMenuActivity" >
+            android:parentActivityName=".gui.MainMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
+                android:value=".gui.MainMenuActivity" />
         </activity>
         <activity
-            android:name=".SoundActivity"
+            android:name=".gui.SoundActivity"
             android:label="@string/sound_header"
-            android:parentActivityName=".MainMenuActivity" >
+            android:parentActivityName=".gui.MainMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nulp.bohdanuhryn.snake.MainMenuActivity" />
+                android:value=".gui.MainMenuActivity" />
         </activity>
         <activity
-            android:name=".SaveScoreActivity"
+            android:name=".gui.SaveScoreActivity"
             android:label="@string/save_score_header">
-        </activity>
-        <activity
-            android:name=".GameEndActivity"
-            android:label="@string/game_end_header">
         </activity>
     </application>
 

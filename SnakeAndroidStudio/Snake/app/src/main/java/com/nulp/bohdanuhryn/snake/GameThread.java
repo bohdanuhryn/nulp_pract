@@ -19,6 +19,8 @@ public class GameThread extends Thread {
 
     private boolean isRun;
 
+    private boolean isPause;
+
     long  timeDelta = 500;
 
     public GameThread(SurfaceHolder _surfaceHolder, GameEngine _gameEngine, Activity _context) {
@@ -29,12 +31,15 @@ public class GameThread extends Thread {
         backgroundPaint = new Paint();
         backgroundPaint.setARGB(255, 0, 0, 0);
         isRun = true;
+        isPause = false;
     }
 
     @Override
     public void run() {
         super.run();
         while (isRun) {
+            if(isPause) continue;
+
             gameEngine.Update();
 
             gameEngine.UpdateUI(context);
@@ -54,6 +59,14 @@ public class GameThread extends Thread {
             catch (InterruptedException ex) {
             }
         }
+    }
+
+    public boolean IsPaused() {
+        return isPause;
+    }
+
+    public void SetPause(boolean set) {
+        isPause = set;
     }
 
     public boolean IsRunning() {

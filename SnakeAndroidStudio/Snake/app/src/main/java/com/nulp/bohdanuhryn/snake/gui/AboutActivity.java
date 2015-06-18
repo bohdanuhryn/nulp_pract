@@ -1,4 +1,4 @@
-package com.nulp.bohdanuhryn.snake;
+package com.nulp.bohdanuhryn.snake.gui;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class SoundActivity extends Activity {
+import com.nulp.bohdanuhryn.snake.R;
+
+public class AboutActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public class SoundActivity extends Activity {
         setContentView(R.layout.activity_menu);
 
         TextView header = (TextView)findViewById(R.id.menu_header);
-        header.setText(R.string.sound_header);
+        header.setText(R.string.about_header);
 
         LinearLayout content = (LinearLayout)findViewById(R.id.menu_content);
     }

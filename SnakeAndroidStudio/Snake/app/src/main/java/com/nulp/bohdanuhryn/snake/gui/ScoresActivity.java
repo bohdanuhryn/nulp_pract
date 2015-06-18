@@ -1,4 +1,4 @@
-package com.nulp.bohdanuhryn.snake;
+package com.nulp.bohdanuhryn.snake.gui;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.GridView;
 import android.widget.TableLayout;
 import android.util.Pair;
+
+import com.nulp.bohdanuhryn.snake.R;
+import com.nulp.bohdanuhryn.snake.ScoresManager;
 
 public class ScoresActivity extends Activity {
 
