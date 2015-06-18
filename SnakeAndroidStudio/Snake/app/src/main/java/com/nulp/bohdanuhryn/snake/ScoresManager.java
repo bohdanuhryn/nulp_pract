@@ -54,7 +54,22 @@ public class ScoresManager {
 
     public static void AddScore(String key, int value) {
         CheckScoresMap();
-        scores.put(key, value);
+        if(CheckScore(value)) {
+            scores.put(key, value);
+            // only top-10
+            if(scores.size() > 10) {
+                Map.Entry<String, Integer> minEntry = null;
+                int min = Integer.MAX_VALUE;
+                for(Map.Entry<String, Integer> entry : scores.entrySet()) {
+                    if(entry.getValue() < min) {
+                        min = entry.getValue();
+                        minEntry = entry;
+                    }
+                }
+                if(minEntry != null)
+                    scores.remove(minEntry.getKey());
+            }
+        }
         WriteScores();
     }
 

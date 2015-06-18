@@ -47,7 +47,10 @@ public class SaveScoreActivity extends Activity {
         editPlayerName.setHint(R.string.player_name_edit);
         content.addView(editPlayerName);
 
-        Button saveButton = new Button(this);
+        Button saveButton;
+        LinearLayout buttonLayout;
+        buttonLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.menu_button, null);
+        saveButton = (Button)buttonLayout.findViewById(R.id.menu_button);
         saveButton.setText(R.string.save_score_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +60,7 @@ public class SaveScoreActivity extends Activity {
                 startActivity(intent);
             }
         });
-        content.addView(saveButton);
+        content.addView(buttonLayout);
     }
 
     @Override

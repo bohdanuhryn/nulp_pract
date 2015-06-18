@@ -1,5 +1,6 @@
 package com.nulp.bohdanuhryn.snake;
 
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.Map;
 import java.util.HashMap;
@@ -15,8 +16,11 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.GridView;
+import android.widget.TableLayout;
+import android.util.Pair;
 
 public class ScoresActivity extends Activity {
 
@@ -38,31 +42,58 @@ public class ScoresActivity extends Activity {
         ScoresManager.Init(this);
         Map<String, Integer> scores = ScoresManager.ReadScores();
 
-        Vector<String> adapterData = new Vector<String>();
+        TableLayout table = new TableLayout(this);
+        TableRow row;
+        TextView text;
 
-        adapterData.add("#");
-        adapterData.add("Player");
-        adapterData.add("Score");
+        row = new TableRow(this);
+        text = new TextView(this);
+        text.setText("#");
+        text.setWidth(60);
+        row.addView(text);
+        text = new TextView(this);
+        text.setText("Player");
+        text.setWidth(200);
+        row.addView(text);
+        text = new TextView(this);
+        text.setText("Score");
+        text.setWidth(100);
+        row.addView(text);
+        table.addView(row);
 
-        int i = 1;
-        for(Map.Entry<String,?> entry : scores.entrySet()) {
-            adapterData.add(Integer.toString(i));
-            adapterData.add(entry.getKey());
-            adapterData.add(entry.getValue().toString());
-            ++i;
+        ArrayList<Pair<String, Integer>> orderedScores = new ArrayList<Pair<String, Integer>>();
+
+        int size = scores.size();
+        int max;
+        Map.Entry<String, Integer> maxEntry;
+        for(int i = 0; i < size; ++i) {
+            max = 0;
+            maxEntry = null;
+            for(Map.Entry<String, Integer> entry : scores.entrySet()) {
+                if(entry.getValue() > max) {
+                    max = entry.getValue();
+                    maxEntry = entry;
+                }
+            }
+            if(maxEntry == null) continue;
+            orderedScores.add(new Pair<String, Integer>(maxEntry.getKey(), maxEntry.getValue()));
+            scores.remove(maxEntry.getKey());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, R.layout.score_cell, R.id.score_cell_text, adapterData);
+        for(int i = 0; i < orderedScores.size(); ++i) {
+            row = new TableRow(this);
+            text = new TextView(this);
+            text.setText(Integer.toString(i + 1));
+            row.addView(text);
+            text = new TextView(this);
+            text.setText(orderedScores.get(i).first);
+            row.addView(text);
+            text = new TextView(this);
+            text.setText(orderedScores.get(i).second.toString());
+            row.addView(text);
+            table.addView(row);
+        }
 
-        GridView gv = new GridView(this);
-        gv.setNumColumns(3);
-        gv.setColumnWidth(90);
-        gv.setVerticalSpacing(5);
-        gv.setHorizontalSpacing(5);
-        gv.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
-        gv.setAdapter(adapter);
-
-        content.addView(gv);
+        content.addView(table);
     }
 }
