@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.nulp.bohdanuhryn.snake.GameEngine;
 import com.nulp.bohdanuhryn.snake.GameView;
 import com.nulp.bohdanuhryn.snake.R;
+import com.nulp.bohdanuhryn.snake.ResourceManager;
 import com.nulp.bohdanuhryn.snake.ScoresManager;
 
 
@@ -37,6 +38,7 @@ public class LevelActivity extends Activity {
         setContentView(R.layout.activity_level);
 
         gameEngine = new GameEngine();
+        gameEngine.InitActivity(this);
         gameView = new GameView(this, gameEngine);
 
         LinearLayout l = (LinearLayout)findViewById(R.id.level_linear_layout);
@@ -49,12 +51,14 @@ public class LevelActivity extends Activity {
     protected void onResume() {
         super.onResume();
         gameView.Resume();
+        ResourceManager.ResumeBackgroundMusic();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         gameView.Suspend();
+        ResourceManager.PauseBackgroundMusic();
     }
 
     @Override
@@ -71,6 +75,7 @@ public class LevelActivity extends Activity {
         gameView.Suspend();
         Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
         intent.putExtra(getResources().getString(R.string.set_pause_menu), true);
+        ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
         startActivity(intent);
     }
 }

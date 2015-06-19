@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.EditText;
 
 import com.nulp.bohdanuhryn.snake.R;
+import com.nulp.bohdanuhryn.snake.ResourceManager;
 import com.nulp.bohdanuhryn.snake.ScoresManager;
 
 public class SaveScoreActivity extends Activity {
@@ -53,10 +54,23 @@ public class SaveScoreActivity extends Activity {
                 ScoresManager.AddScore(editPlayerName.getText().toString(), score);
                 Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
                 intent.putExtra(getResources().getString(R.string.set_game_end_menu), true);
+                ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                 startActivity(intent);
             }
         });
         content.addView(buttonLayout);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ResourceManager.ResumeBackgroundMusic();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ResourceManager.PauseBackgroundMusic();
     }
 
     @Override

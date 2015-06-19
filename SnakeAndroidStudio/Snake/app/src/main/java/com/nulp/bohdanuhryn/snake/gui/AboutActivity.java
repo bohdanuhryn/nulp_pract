@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nulp.bohdanuhryn.snake.R;
+import com.nulp.bohdanuhryn.snake.ResourceManager;
 
 public class AboutActivity extends Activity {
 
@@ -30,5 +31,17 @@ public class AboutActivity extends Activity {
         header.setText(R.string.about_header);
 
         LinearLayout content = (LinearLayout)findViewById(R.id.menu_content);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ResourceManager.ResumeBackgroundMusic();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ResourceManager.PauseBackgroundMusic();
     }
 }

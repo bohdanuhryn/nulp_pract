@@ -16,10 +16,11 @@
 
     <!-- Scores activity -->
     <string name="scores_header">Scores</string>
-    <string name="scores_file">SCORES_FILE</string>
 
     <!-- Sound activity -->
     <string name="sound_header">Sound settings</string>
+    <string name="sound_fx_button">Sound FX</string>
+    <string name="music_button">Music</string>
 
     <!-- About activity -->
     <string name="about_header">About</string>
@@ -39,5 +40,13 @@
     <!-- Constants -->
     <string name="set_pause_menu">SET_PAUSE_MENU</string>
     <string name="set_game_end_menu">SET_GAME_END_MENU</string>
+
+    <!-- Setting constants -->
+    <string name="sound_fx_item">SOUND_FX_ITEM</string>
+    <string name="music_item">MUSIC_ITEM</string>
+
+    <!-- File names -->
+    <string name="scores_file">SCORES_FILE</string>
+    <string name="settings_file">SETTINGS_FILE</string>
 
 </resources>

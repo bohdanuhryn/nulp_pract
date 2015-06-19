@@ -31,6 +31,17 @@ public class GameEngine {
         moveY = 0;
     }
 
+    public void InitActivity(final Activity context) {
+        final TextView score = (TextView) context.findViewById(R.id.score_text_view);
+        score.post(new Runnable() {
+            public void run() {
+                String str = Integer.toString(snake.foodWeight).concat(" / ")
+                        .concat(Integer.toString(ScoresManager.GetMaxScore()));
+                score.setText(str);
+            }
+        });
+    }
+
     public void Update() {
         gameField.Move(moveX, moveY);
         moveX = 0;
@@ -40,6 +51,7 @@ public class GameEngine {
     public void UpdateUI(final Activity context) {
         switch (snake.GetState()) {
             case EAT_FOOD:
+                ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.SNAKE_EAT_SOUND);
                 final TextView score = (TextView) context.findViewById(R.id.score_text_view);
                 score.post(new Runnable() {
                     public void run() {
@@ -51,6 +63,7 @@ public class GameEngine {
                 break;
             case BITE_ITSELF:
             case KICK_WALL:
+                ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.SNAKE_BITE_SOUND);
                 Handler handler = new Handler(Looper.getMainLooper());
                 if(ScoresManager.CheckScore(snake.foodWeight)) {
                     handler.post(new Runnable() {

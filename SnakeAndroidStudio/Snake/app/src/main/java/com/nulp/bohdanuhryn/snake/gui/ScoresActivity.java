@@ -23,6 +23,7 @@ import android.widget.TableLayout;
 import android.util.Pair;
 
 import com.nulp.bohdanuhryn.snake.R;
+import com.nulp.bohdanuhryn.snake.ResourceManager;
 import com.nulp.bohdanuhryn.snake.ScoresManager;
 
 public class ScoresActivity extends Activity {
@@ -52,15 +53,18 @@ public class ScoresActivity extends Activity {
         row = new TableRow(this);
         text = new TextView(this);
         text.setText("#");
-        text.setWidth(60);
+        text.setWidth(50);
+        text.setTextSize(18);
         row.addView(text);
         text = new TextView(this);
         text.setText("Player");
-        text.setWidth(200);
+        text.setWidth(240);
+        text.setTextSize(18);
         row.addView(text);
         text = new TextView(this);
         text.setText("Score");
-        text.setWidth(100);
+        text.setWidth(90);
+        text.setTextSize(18);
         row.addView(text);
         table.addView(row);
 
@@ -87,16 +91,31 @@ public class ScoresActivity extends Activity {
             row = new TableRow(this);
             text = new TextView(this);
             text.setText(Integer.toString(i + 1));
+            text.setTextSize(18);
             row.addView(text);
             text = new TextView(this);
             text.setText(orderedScores.get(i).first);
+            text.setTextSize(18);
             row.addView(text);
             text = new TextView(this);
             text.setText(orderedScores.get(i).second.toString());
+            text.setTextSize(18);
             row.addView(text);
             table.addView(row);
         }
 
         content.addView(table);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ResourceManager.ResumeBackgroundMusic();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ResourceManager.PauseBackgroundMusic();
     }
 }

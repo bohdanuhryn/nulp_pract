@@ -9,9 +9,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.media.MediaPlayer;
 
 import com.nulp.bohdanuhryn.snake.R;
+import com.nulp.bohdanuhryn.snake.Settings;
+import com.nulp.bohdanuhryn.snake.ResourceManager;
 
 public class MainMenuActivity extends Activity {
 
@@ -22,6 +23,13 @@ public class MainMenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // set resources
+        Settings.Init(this);
+        ResourceManager.Init(this);
+        // start background music
+        if(Settings.IsMusicOn()) {
+            ResourceManager.PlayBackgroundMusic(true);
+        }
         // fullscreen on
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -42,7 +50,6 @@ public class MainMenuActivity extends Activity {
             header.setText(R.string.main_menu_header);
         // content fill
         LinearLayout content = (LinearLayout)findViewById(R.id.menu_content);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.button_click);
         Button button;
         LinearLayout buttonLayout;
         if(pauseMenu || gameEndMenu) {
@@ -54,7 +61,7 @@ public class MainMenuActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), LevelActivity.class);// TODO:!!!
-                    mp.start();
+                    ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                     startActivity(intent);
                 }
             });
@@ -67,7 +74,7 @@ public class MainMenuActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
-                    mp.start();
+                    ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                     startActivity(intent);
                 }
             });
@@ -82,7 +89,7 @@ public class MainMenuActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), LevelActivity.class);
-                    mp.start();
+                    ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                     startActivity(intent);
                 }
             });
@@ -97,7 +104,7 @@ public class MainMenuActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ScoresActivity.class);
-                    mp.start();
+                    ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                     startActivity(intent);
                 }
             });
@@ -110,7 +117,7 @@ public class MainMenuActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), SoundActivity.class);
-                    mp.start();
+                    ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                     startActivity(intent);
                 }
             });
@@ -123,7 +130,7 @@ public class MainMenuActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), AboutActivity.class);
-                    mp.start();
+                    ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                     startActivity(intent);
                 }
             });
@@ -133,6 +140,18 @@ public class MainMenuActivity extends Activity {
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ResourceManager.ResumeBackgroundMusic();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ResourceManager.PauseBackgroundMusic();
     }
 
     @Override
@@ -149,5 +168,6 @@ public class MainMenuActivity extends Activity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
+        ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
     }
 }
