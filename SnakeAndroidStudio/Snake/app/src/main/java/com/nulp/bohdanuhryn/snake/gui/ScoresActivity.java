@@ -44,7 +44,7 @@ public class ScoresActivity extends Activity {
         LinearLayout content = (LinearLayout)findViewById(R.id.menu_content);
 
         ScoresManager.Init(this);
-        Map<String, Integer> scores = ScoresManager.ReadScores();
+        Map<String, Integer> scores = new HashMap<String, Integer>(ScoresManager.ReadScores());
 
         TableLayout table = new TableLayout(this);
         TableRow row;

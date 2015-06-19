@@ -63,6 +63,12 @@ public class SoundActivity extends Activity {
                 Settings.SetMusicOn(isChecked);
                 Settings.WriteSettings();
                 ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
+                if(isChecked) {
+                    ResourceManager.PlayBackgroundMusic(true);
+                }
+                else {
+                    ResourceManager.PlayBackgroundMusic(false);
+                }
             }
         });
         text = (TextView) buttonLayout.findViewById(R.id.toggle_button_text);

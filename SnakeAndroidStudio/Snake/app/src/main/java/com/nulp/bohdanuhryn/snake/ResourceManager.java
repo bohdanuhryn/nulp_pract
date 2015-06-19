@@ -48,12 +48,12 @@ public class ResourceManager {
     public static void PlayBackgroundMusic(boolean play) {
         if(play && isBackgroundMusicPlay)
             return;
-        if(play) {
+        if(play && Settings.IsMusicOn()) {
             players.get(ResourceEnum.BACKGROUND_MUSIC).start();
             isBackgroundMusicPlay = true;
         }
         else {
-            players.get(ResourceEnum.BACKGROUND_MUSIC).stop();
+            players.get(ResourceEnum.BACKGROUND_MUSIC).pause();
             isBackgroundMusicPlay = false;
         }
     }
@@ -63,7 +63,12 @@ public class ResourceManager {
     }
 
     public static void ResumeBackgroundMusic() {
-        players.get(ResourceEnum.BACKGROUND_MUSIC).start();
+        if(Settings.IsMusicOn())
+            players.get(ResourceEnum.BACKGROUND_MUSIC).start();
+    }
+
+    public static boolean IsBackgroundMusicPlay() {
+        return isBackgroundMusicPlay;
     }
 
 }
