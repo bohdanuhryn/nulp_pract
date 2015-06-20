@@ -54,7 +54,7 @@ public class GameThread extends Thread {
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
             try {
-                Thread.sleep(timeDelta);
+                Thread.sleep(gameEngine.GetGameSpeed());
             }
             catch (InterruptedException ex) {
             }

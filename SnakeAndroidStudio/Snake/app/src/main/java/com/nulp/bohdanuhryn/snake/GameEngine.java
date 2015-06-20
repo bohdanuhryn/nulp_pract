@@ -20,15 +20,22 @@ import com.nulp.bohdanuhryn.snake.gui.SaveScoreActivity;
 public class GameEngine {
 
     private GameField gameField;
+
     private Snake snake;
+
     private int cellSize;
+
     private int moveX;
+
     private int moveY;
+
+    private int gameSpeed;
 
     public GameEngine() {
         TestField();
         moveX = 0;
         moveY = 0;
+        gameSpeed = snake.GetSpeed();
     }
 
     public void InitActivity(final Activity context) {
@@ -60,6 +67,7 @@ public class GameEngine {
                         score.setText(str);
                     }
                 });
+                gameSpeed = snake.GetSpeed();
                 break;
             case BITE_ITSELF:
             case KICK_WALL:
@@ -135,6 +143,10 @@ public class GameEngine {
         cellSize = _width / gameField.width;
         if(_height / gameField.height < cellSize)
             cellSize = _height / gameField.height;
+    }
+
+    public int GetGameSpeed() {
+        return gameSpeed;
     }
 
     private void TestField() {

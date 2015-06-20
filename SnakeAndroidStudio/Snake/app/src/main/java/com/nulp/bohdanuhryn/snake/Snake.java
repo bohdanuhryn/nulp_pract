@@ -9,14 +9,20 @@ import android.graphics.Point;
 public class Snake {
 
     public Vector<Bone> body;
+
     public int foodWeight;
+
     private SnakeState state;
+
+    private int speedUpDelta;
 
     public Snake(int x, int y, int length) {
         body = new Vector<Bone>();
         for(byte i = 0; i < length; ++i)
             body.add(new Bone(x, y + i));
         state = SnakeState.MOVE_ON;
+        foodWeight = 0;
+        speedUpDelta = 4;
     }
 
     public void Move(int moveX, int moveY, GameField gameField) {
@@ -66,6 +72,17 @@ public class Snake {
 
     public SnakeState GetState() {
         return state;
+    }
+
+    public int GetSpeed() {
+        if(600 - foodWeight > 400)
+            return 600 - (foodWeight * speedUpDelta);
+        else
+            return 400;
+    }
+
+    public void SetSpeedUpDelta(int set) {
+        speedUpDelta = set;
     }
 
     public void OnMove() {
