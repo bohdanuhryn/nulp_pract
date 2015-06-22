@@ -17,6 +17,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".gui.LevelSelectActivity"
+            android:label="@string/title_activity_level"
+            android:parentActivityName=".gui.MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".gui.MainMenuActivity" />
+        </activity>
+        <activity
             android:name=".gui.LevelActivity"
             android:label="@string/title_activity_level"
             android:parentActivityName=".gui.MainMenuActivity" >

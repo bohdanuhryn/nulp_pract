@@ -31,8 +31,18 @@ public class GameEngine {
 
     private int gameSpeed;
 
+    private int selectedLevelId;
+
     public GameEngine() {
+        selectedLevelId = -1;
         TestField();
+        moveX = 0;
+        moveY = 0;
+        gameSpeed = snake.GetSpeed();
+    }
+
+    public GameEngine(int _selectedLevelId) {
+        selectedLevelId = _selectedLevelId;
         moveX = 0;
         moveY = 0;
         gameSpeed = snake.GetSpeed();
@@ -79,7 +89,7 @@ public class GameEngine {
                         public void run() {
                             Intent intent = new Intent(context, SaveScoreActivity.class);
                             intent.putExtra("score", snake.foodWeight);
-                            //intent.putExtra("level", levelId);
+                            intent.putExtra(getResources().getString(R.string.selected_level_id), selectedLevelId);
                             context.startActivity(intent);
                         }
                     });
@@ -90,7 +100,7 @@ public class GameEngine {
                         public void run() {
                             Intent intent = new Intent(context, MainMenuActivity.class);
                             intent.putExtra(context.getResources().getString(R.string.set_game_end_menu), true);
-                            //intent.putExtra("level", levelId);// TODO:!!!
+                            intent.putExtra(getResources().getString(R.string.selected_level_id), selectedLevelId);
                             context.startActivity(intent);
                         }
                     });

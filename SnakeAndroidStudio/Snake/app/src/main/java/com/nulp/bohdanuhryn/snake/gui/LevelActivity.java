@@ -27,6 +27,8 @@ public class LevelActivity extends Activity {
 
     private GameView gameView;
 
+    private int selectedLevelId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,15 @@ public class LevelActivity extends Activity {
 
         setContentView(R.layout.activity_level);
 
-        gameEngine = new GameEngine();
+        Intent intent = getIntent();
+        selectedLevelId = intent.getIntExtra(getResources().getString(R.string.selected_level_id), -1);
+
+        if(selectedLevelId < 0) {
+            gameEngine = new GameEngine();
+        }
+        else {
+            gameEngine = new GameEngine(selectedLevelId);
+        }
         gameEngine.InitActivity(this);
         gameView = new GameView(this, gameEngine);
 
@@ -75,6 +85,7 @@ public class LevelActivity extends Activity {
         gameView.Suspend();
         Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
         intent.putExtra(getResources().getString(R.string.set_pause_menu), true);
+        intent.putExtra(getResources().getString(R.string.selected_level_id), selectedLevelId);
         ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
         startActivity(intent);
     }

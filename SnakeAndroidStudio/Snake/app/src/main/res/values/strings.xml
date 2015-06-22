@@ -30,12 +30,18 @@
     <string name="player_name_edit">Enter your name</string>
     <string name="save_score_button">Save score</string>
 
+    <!-- Level select activity -->
+    <string name="level_select_header">Select level:</string>
+
     <!-- Level -->
     <string name="title_activity_level">Level</string>
 
     <string name="action_settings">Settings</string>
 
     <string name="score_label">Score:</string>
+
+    <!-- Level constants -->
+    <string name="selected_level_id">SELECTED_LEVEL_ID</string>
 
     <!-- Constants -->
     <string name="set_pause_menu">SET_PAUSE_MENU</string>

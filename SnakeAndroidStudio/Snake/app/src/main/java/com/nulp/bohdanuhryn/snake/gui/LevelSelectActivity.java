@@ -9,56 +9,41 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.EditText;
 
 import com.nulp.bohdanuhryn.snake.R;
+import com.nulp.bohdanuhryn.snake.Settings;
 import com.nulp.bohdanuhryn.snake.ResourceManager;
-import com.nulp.bohdanuhryn.snake.ScoresManager;
 
-public class SaveScoreActivity extends Activity {
-
-    private int score;
-
-    private EditText editPlayerName;
+public class LevelSelectActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // fullscreen on
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        // set layout
         setContentView(R.layout.activity_menu);
-
+        // set header
         TextView header = (TextView)findViewById(R.id.menu_header);
-        header.setText(R.string.save_score_header);
-
-        Intent intent = getIntent();
-        score = intent.getIntExtra("score", 0);
-
+        header.setText(R.string.level_select_header);
+        // content fill
         LinearLayout content = (LinearLayout)findViewById(R.id.menu_content);
-
-        editPlayerName = new EditText(this);
-        editPlayerName.setHint(R.string.player_name_edit);
-        content.addView(editPlayerName);
-
-        Button saveButton;
+        Button button;
         LinearLayout buttonLayout;
-        buttonLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.menu_button, null);
-        saveButton = (Button)buttonLayout.findViewById(R.id.menu_button);
-        saveButton.setText(R.string.save_score_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ScoresManager.AddScore(editPlayerName.getText().toString(), score);
-                Intent intent = new Intent(v.getContext(), MainMenuActivity.class);
-                intent.putExtra(getResources().getString(R.string.set_game_end_menu), true);
-                intent.putExtra(getResources().getString(R.string.selected_level_id), selectedLevelId);
+        // Restart button
+        buttonLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.menu_button, null);
+        button = (Button) buttonLayout.findViewById(R.id.menu_button);
+        button.setText(R.string.restart_button);
+        button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), LevelActivity.class);// TODO:!!!
                 ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                 startActivity(intent);
             }
-        });
+            });
         content.addView(buttonLayout);
     }
 
@@ -72,10 +57,5 @@ public class SaveScoreActivity extends Activity {
     protected void onPause() {
         super.onPause();
         ResourceManager.PauseBackgroundMusic();
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 }

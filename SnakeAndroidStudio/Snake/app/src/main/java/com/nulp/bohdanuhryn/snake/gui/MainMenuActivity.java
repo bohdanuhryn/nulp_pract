@@ -20,6 +20,8 @@ public class MainMenuActivity extends Activity {
 
     private boolean gameEndMenu;
 
+    private int selectedLevelId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,7 @@ public class MainMenuActivity extends Activity {
         Intent intent = getIntent();
         pauseMenu = intent.getBooleanExtra(getResources().getString(R.string.set_pause_menu), false);
         gameEndMenu = intent.getBooleanExtra(getResources().getString(R.string.set_game_end_menu), false);
+        selectedLevelId = intent.getIntExtra(getResources().getString(R.string.selected_level_id), -1);
         // set header
         TextView header = (TextView)findViewById(R.id.menu_header);
         if(pauseMenu)
@@ -60,7 +63,8 @@ public class MainMenuActivity extends Activity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), LevelActivity.class);// TODO:!!!
+                    Intent intent = new Intent(v.getContext(), LevelActivity.class);
+                    intent.putExtra(getResources().getString(R.string.selected_level_id), selectedLevelId);
                     ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                     startActivity(intent);
                 }
@@ -88,7 +92,7 @@ public class MainMenuActivity extends Activity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), LevelActivity.class);
+                    Intent intent = new Intent(v.getContext(), LevelSelectActivity.class);
                     ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
                     startActivity(intent);
                 }
