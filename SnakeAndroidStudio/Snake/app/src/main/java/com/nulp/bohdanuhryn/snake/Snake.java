@@ -16,6 +16,9 @@ public class Snake {
 
     private int speedUpDelta;
 
+    public Snake() {
+    }
+
     public Snake(int x, int y, int length) {
         body = new Vector<Bone>();
         for(byte i = 0; i < length; ++i)
@@ -87,5 +90,16 @@ public class Snake {
 
     public void OnMove() {
 
+    }
+
+    public Snake Clone() {
+        Snake snake = new Snake();
+        snake.foodWeight = foodWeight;
+        snake.speedUpDelta = speedUpDelta;
+        snake.state = state;
+        snake.body = new Vector<Bone>();
+        for(int i = 0; i < body.size(); ++i)
+            snake.body.add(new Bone(body.get(i).x, body.get(i).y));
+        return snake;
     }
 }

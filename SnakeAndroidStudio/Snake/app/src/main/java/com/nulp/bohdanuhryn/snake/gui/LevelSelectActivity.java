@@ -1,18 +1,23 @@
 package com.nulp.bohdanuhryn.snake.gui;
 
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.app.Activity;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.content.Context;
 
+import com.nulp.bohdanuhryn.snake.LevelResource;
+import com.nulp.bohdanuhryn.snake.LevelThumbView;
 import com.nulp.bohdanuhryn.snake.R;
-import com.nulp.bohdanuhryn.snake.Settings;
 import com.nulp.bohdanuhryn.snake.ResourceManager;
+
+import java.util.ArrayList;
 
 public class LevelSelectActivity extends Activity {
 
@@ -30,21 +35,32 @@ public class LevelSelectActivity extends Activity {
         header.setText(R.string.level_select_header);
         // content fill
         LinearLayout content = (LinearLayout)findViewById(R.id.menu_content);
-        Button button;
-        LinearLayout buttonLayout;
-        // Restart button
-        buttonLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.menu_button, null);
-        button = (Button) buttonLayout.findViewById(R.id.menu_button);
-        button.setText(R.string.restart_button);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        LinearLayout frame;
+        LevelThumbView level_thumb;
+        TextView level_header;
+        ArrayList<Integer> levelsList = LevelResource.GetIdArray();
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        for(int i = 0; i < levelsList.size(); ++i) {
+            frame = (LinearLayout)inflater.inflate(R.layout.levels_list_item, null);
+            level_thumb = (LevelThumbView) frame.findViewById(R.id.level_thumb);
+            level_header = (TextView) frame.findViewById(R.id.level_header);
+            level_thumb.setLevelId(levelsList.get(i));
+            level_header.setText(getResources().getString(R.string.level_header_prefix) + Integer.toString(i + 1));
+            frame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), LevelActivity.class);// TODO:!!!
-                ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
-                startActivity(intent);
-            }
+                    Intent intent = new Intent(v.getContext(), LevelActivity.class);
+                    LevelThumbView thumb = (LevelThumbView)v.findViewById(R.id.level_thumb);
+                    intent.putExtra(
+                            getResources().getString(R.string.selected_level_id),
+                            thumb.getLevelId());
+                    ResourceManager.PlaySoundFX(ResourceManager.ResourceEnum.BUTTON_CLICK_SOUND);
+                    startActivity(intent);
+                }
             });
-        content.addView(buttonLayout);
+            content.addView(frame);
+        }
     }
 
     @Override

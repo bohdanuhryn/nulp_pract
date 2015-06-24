@@ -14,9 +14,6 @@ import android.os.Handler;
 import com.nulp.bohdanuhryn.snake.gui.MainMenuActivity;
 import com.nulp.bohdanuhryn.snake.gui.SaveScoreActivity;
 
-/**
- * Created by BohdanUhryn on 14.06.2015.
- */
 public class GameEngine {
 
     private GameField gameField;
@@ -43,6 +40,9 @@ public class GameEngine {
 
     public GameEngine(int _selectedLevelId) {
         selectedLevelId = _selectedLevelId;
+        LevelResource level = LevelResource.Get(selectedLevelId);
+        snake = level.snake;
+        gameField = new GameField(level.width, level.height, level.walls, snake);
         moveX = 0;
         moveY = 0;
         gameSpeed = snake.GetSpeed();
@@ -89,7 +89,9 @@ public class GameEngine {
                         public void run() {
                             Intent intent = new Intent(context, SaveScoreActivity.class);
                             intent.putExtra("score", snake.foodWeight);
-                            intent.putExtra(getResources().getString(R.string.selected_level_id), selectedLevelId);
+                            intent.putExtra(
+                                    context.getResources().getString(R.string.selected_level_id),
+                                    selectedLevelId);
                             context.startActivity(intent);
                         }
                     });
@@ -99,8 +101,12 @@ public class GameEngine {
                         @Override
                         public void run() {
                             Intent intent = new Intent(context, MainMenuActivity.class);
-                            intent.putExtra(context.getResources().getString(R.string.set_game_end_menu), true);
-                            intent.putExtra(getResources().getString(R.string.selected_level_id), selectedLevelId);
+                            intent.putExtra(
+                                    context.getResources().getString(R.string.set_game_end_menu),
+                                    true);
+                            intent.putExtra(
+                                    context.getResources().getString(R.string.selected_level_id),
+                                    selectedLevelId);
                             context.startActivity(intent);
                         }
                     });

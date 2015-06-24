@@ -32,6 +32,7 @@
 
     <!-- Level select activity -->
     <string name="level_select_header">Select level:</string>
+    <string name="level_header_prefix">Level - </string>
 
     <!-- Level -->
     <string name="title_activity_level">Level</string>

@@ -21,6 +21,8 @@ public class SaveScoreActivity extends Activity {
 
     private EditText editPlayerName;
 
+    private int selectedLevelId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,7 @@ public class SaveScoreActivity extends Activity {
 
         Intent intent = getIntent();
         score = intent.getIntExtra("score", 0);
+        selectedLevelId = intent.getIntExtra(getResources().getString(R.string.selected_level_id), -1);
 
         LinearLayout content = (LinearLayout)findViewById(R.id.menu_content);
 
