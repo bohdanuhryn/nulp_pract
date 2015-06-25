@@ -33,9 +33,9 @@ public class ResourceManager {
         players.put(ResourceEnum.BUTTON_CLICK_SOUND, MediaPlayer.create(context, R.raw.button_click));
         players.put(ResourceEnum.SNAKE_EAT_SOUND, MediaPlayer.create(context, R.raw.snake_eat));
         players.put(ResourceEnum.SNAKE_BITE_SOUND, MediaPlayer.create(context, R.raw.snake_kick));
-        MediaPlayer background = MediaPlayer.create(context, R.raw.background_music);
+        /*MediaPlayer background = MediaPlayer.create(context, R.raw.background_music);
         background.setLooping(true);
-        players.put(ResourceEnum.BACKGROUND_MUSIC, background);
+        players.put(ResourceEnum.BACKGROUND_MUSIC, background);*/
         isBackgroundMusicPlay = false;
         isInitialized = true;
     }
@@ -49,22 +49,20 @@ public class ResourceManager {
         if(play && isBackgroundMusicPlay)
             return;
         if(play && Settings.IsMusicOn()) {
+            if(!players.containsKey(ResourceEnum.BACKGROUND_MUSIC)) {
+                MediaPlayer background = MediaPlayer.create(context, R.raw.background_music);
+                background.setLooping(true);
+                players.put(ResourceEnum.BACKGROUND_MUSIC, background);
+            }
             players.get(ResourceEnum.BACKGROUND_MUSIC).start();
             isBackgroundMusicPlay = true;
         }
         else {
+            if(!players.containsKey(ResourceEnum.BACKGROUND_MUSIC))
+                return;
             players.get(ResourceEnum.BACKGROUND_MUSIC).pause();
             isBackgroundMusicPlay = false;
         }
-    }
-
-    public static void PauseBackgroundMusic() {
-        players.get(ResourceEnum.BACKGROUND_MUSIC).pause();
-    }
-
-    public static void ResumeBackgroundMusic() {
-        if(Settings.IsMusicOn())
-            players.get(ResourceEnum.BACKGROUND_MUSIC).start();
     }
 
     public static boolean IsBackgroundMusicPlay() {

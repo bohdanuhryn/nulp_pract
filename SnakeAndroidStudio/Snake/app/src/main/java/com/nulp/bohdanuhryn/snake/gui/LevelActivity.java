@@ -53,14 +53,14 @@ public class LevelActivity extends Activity {
     protected void onResume() {
         super.onResume();
         gameView.Resume();
-        ResourceManager.ResumeBackgroundMusic();
+        ResourceManager.PlayBackgroundMusic(true);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         gameView.Suspend();
-        ResourceManager.PauseBackgroundMusic();
+        ResourceManager.PlayBackgroundMusic(false);
     }
 
     @Override

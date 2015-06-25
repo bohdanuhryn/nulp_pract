@@ -44,6 +44,7 @@ public class SaveScoreActivity extends Activity {
 
         editPlayerName = new EditText(this);
         editPlayerName.setHint(R.string.player_name_edit);
+        editPlayerName.setText("Player");
         content.addView(editPlayerName);
 
         Button saveButton;
@@ -68,13 +69,13 @@ public class SaveScoreActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        ResourceManager.ResumeBackgroundMusic();
+        ResourceManager.PlayBackgroundMusic(true);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ResourceManager.PauseBackgroundMusic();
+        ResourceManager.PlayBackgroundMusic(false);
     }
 
     @Override

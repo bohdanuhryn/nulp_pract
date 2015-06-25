@@ -66,12 +66,14 @@ public class LevelSelectActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        ResourceManager.ResumeBackgroundMusic();
+        //ResourceManager.ResumeBackgroundMusic();
+        ResourceManager.PlayBackgroundMusic(true);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ResourceManager.PauseBackgroundMusic();
+        //ResourceManager.PauseBackgroundMusic();
+        ResourceManager.PlayBackgroundMusic(false);
     }
 }
