@@ -26,16 +26,16 @@ public class LevelResource {
         LevelResource level;
 
         level = new LevelResource();
-        level.height = 20;
-        level.width = 16;
-        level.snake = new Snake(8, 10, 2);
+        level.height = 19;
+        level.width = 15;
+        level.snake = new Snake(8, 9, 2);
         level.walls = new Vector<Wall>();
         levels.put(n++, level);
 
         level = new LevelResource();
-        level.height = 20;
-        level.width = 16;
-        level.snake = new Snake(8, 10, 2);
+        level.height = 19;
+        level.width = 15;
+        level.snake = new Snake(8, 9, 2);
         level.walls = new Vector<Wall>();
         for(int i = 0; i < level.width; ++i) {
             level.walls.add(new Wall(i, 0));
@@ -44,6 +44,17 @@ public class LevelResource {
         for(int i = 1; i < level.height - 1; ++i) {
             level.walls.add(new Wall(0, i));
             level.walls.add(new Wall(level.width - 1, i));
+        }
+        levels.put(n++, level);
+
+        level = new LevelResource();
+        level.height = 19;
+        level.width = 15;
+        level.snake = new Snake(8, 9, 2);
+        level.walls = new Vector<Wall>();
+        for(int i = 2; i < level.width - 2; ++i) {
+            level.walls.add(new Wall(i, 5));
+            level.walls.add(new Wall(i, 13));
         }
         levels.put(n, level);
     }

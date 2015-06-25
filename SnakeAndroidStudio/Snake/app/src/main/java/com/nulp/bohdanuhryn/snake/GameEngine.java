@@ -4,8 +4,10 @@ import java.util.Vector;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Matrix;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -39,17 +41,19 @@ public class GameEngine {
 
     public GameEngine() {
         selectedLevelId = -1;
-        TestField();
-        moveX = 0;
-        moveY = 0;
-        gameSpeed = snake.GetSpeed();
+
     }
 
     public GameEngine(int _selectedLevelId) {
         selectedLevelId = _selectedLevelId;
-        LevelResource level = LevelResource.Get(selectedLevelId);
-        snake = level.snake;
-        gameField = new GameField(level.width, level.height, level.walls, snake);
+        if(selectedLevelId < 0) {
+            TestField();
+        }
+        else {
+            LevelResource level = LevelResource.Get(selectedLevelId);
+            snake = level.snake;
+            gameField = new GameField(level.width, level.height, level.walls, snake);
+        }
         moveX = 0;
         moveY = 0;
         gameSpeed = snake.GetSpeed();
@@ -125,21 +129,31 @@ public class GameEngine {
 
     public void Draw(Canvas canvas) {
         Paint p = new Paint();
+        Rect srcRect = new Rect();
+        Rect destRect = new Rect();
 
-        p.setARGB(255, 190, 190, 100);
+        p.setARGB(255, 0, 0, 0);
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), p);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall);
-
-        Rect srcRect = new Rect();
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ground);
+        BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        p.setShader(bitmapShader);
         srcRect.top = 0;
         srcRect.left = 0;
         srcRect.bottom = bitmap.getHeight();
         srcRect.right = bitmap.getWidth();
+        destRect.top = 0;
+        destRect.left = 0;
+        destRect.bottom = gameField.height * cellSize;
+        destRect.right = gameField.width * cellSize;
+        canvas.drawBitmap(bitmap, srcRect, destRect, p);
+        p = new Paint();
 
-        Rect destRect = new Rect();
-
-        p.setARGB(255, 120, 80, 80);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.wall);
+        srcRect.top = 0;
+        srcRect.left = 0;
+        srcRect.bottom = bitmap.getHeight();
+        srcRect.right = bitmap.getWidth();
         for(int i = 0; i < gameField.walls.size(); ++i) {
             destRect.top = gameField.walls.elementAt(i).y * cellSize;
             destRect.left = gameField.walls.elementAt(i).x * cellSize;
@@ -186,6 +200,8 @@ public class GameEngine {
                     dh = snake.body.elementAt(i).x - snake.body.elementAt(i - 1).x;
                     dv = snake.body.elementAt(i).y - snake.body.elementAt(i - 1).y;
                 }
+                if(Math.abs(dh) > 1) dh = dh / Math.abs(dh) * -1;
+                if(Math.abs(dv) > 1) dv = dv / Math.abs(dv) * -1;
                 if(dh == -1)
                     rotMatrix.setRotate(90);
                 else if(dh == 1)
@@ -199,6 +215,10 @@ public class GameEngine {
                 dvb = snake.body.elementAt(i).y - snake.body.elementAt(i - 1).y;//vertical delta
                 dha = snake.body.elementAt(i + 1).x - snake.body.elementAt(i).x;//horizontal delta
                 dva = snake.body.elementAt(i).y - snake.body.elementAt(i + 1).y;//vertical delta
+                if(Math.abs(dhb) > 1) dhb = dhb / Math.abs(dhb) * -1;
+                if(Math.abs(dha) > 1) dha = dha / Math.abs(dha) * -1;
+                if(Math.abs(dvb) > 1) dvb = dvb / Math.abs(dvb) * -1;
+                if(Math.abs(dva) > 1) dva = dva / Math.abs(dva) * -1;
                 if(dhb * dha + dvb * dva == 0) {// vactors are rectangular
                     bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.snake_body_ang);
                     if((dhb == -1 && dva == -1) || (dvb == -1 && dha == -1))

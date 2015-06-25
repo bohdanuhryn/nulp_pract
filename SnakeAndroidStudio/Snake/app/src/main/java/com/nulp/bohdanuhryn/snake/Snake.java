@@ -25,7 +25,7 @@ public class Snake {
             body.add(new Bone(x, y + i));
         state = SnakeState.MOVE_ON;
         foodWeight = 0;
-        speedUpDelta = 4;
+        speedUpDelta = 2;
     }
 
     public void Move(int moveX, int moveY, GameField gameField) {
@@ -78,8 +78,8 @@ public class Snake {
     }
 
     public int GetSpeed() {
-        if(600 - foodWeight > 400)
-            return 600 - (foodWeight * speedUpDelta);
+        if(500 - foodWeight > 400)
+            return 500 - (foodWeight * speedUpDelta);
         else
             return 400;
     }

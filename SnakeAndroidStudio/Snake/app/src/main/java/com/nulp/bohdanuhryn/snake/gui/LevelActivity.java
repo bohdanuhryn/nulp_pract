@@ -32,28 +32,20 @@ public class LevelActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_level);
-
+        gameEngine = (GameEngine)getLastNonConfigurationInstance();
         Intent intent = getIntent();
         selectedLevelId = intent.getIntExtra(getResources().getString(R.string.selected_level_id), -1);
-
-        if(selectedLevelId < 0) {
-            gameEngine = new GameEngine();
-        }
-        else {
+        if(gameEngine == null) {
             gameEngine = new GameEngine(selectedLevelId);
         }
         gameEngine.InitActivity(this);
         gameView = new GameView(this, gameEngine);
-
-        LinearLayout l = (LinearLayout)findViewById(R.id.level_linear_layout);
+        LinearLayout l = (LinearLayout) findViewById(R.id.level_linear_layout);
         l.addView(gameView);
-
         ScoresManager.Init(this);
     }
 
@@ -69,6 +61,12 @@ public class LevelActivity extends Activity {
         super.onPause();
         gameView.Suspend();
         ResourceManager.PauseBackgroundMusic();
+    }
+
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        final GameEngine data = gameEngine;
+        return data;
     }
 
     @Override
